@@ -1,0 +1,21 @@
+{
+    "debug": true,
+    "experimental": true,
+    "features": {
+      "buildkit": true
+    },
+    "builder": {
+      "gc": {
+        "defaultKeepStorage": "20GB",
+        "enabled": true
+      }
+    },
+    "ip": "127.0.0.1",
+    "bip": "192.168.10.1/24",
+    "default-address-pools": [
+        {
+            "base": "192.168.10.0/16",
+            "size": 24
+        }
+    ]
+}

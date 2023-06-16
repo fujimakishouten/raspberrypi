@@ -1,0 +1,14 @@
+- name: Install docker
+  apt:
+    name:
+      - "docker.io"
+      - kubernetes-client
+    state: latest
+    update_cache: yes
+
+- name: Copy daemon.json
+  copy:
+      src: daemon.json
+      dest: /etc/docker/daemon.json
+      backup: yes
+  notify: Restart docker

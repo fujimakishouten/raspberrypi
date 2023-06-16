@@ -1,0 +1,21 @@
+- name: Set default release version
+  copy:
+    src: 99target
+    dest: /etc/apt/apt.conf.d/99target
+    backup: yes
+
+- name: Copy sources.list
+  copy:
+    src: sources.list
+    dest: /etc/apt/sources.list
+    backup: yes
+
+- name: Update cache
+  apt:
+    update_cache: yes
+
+- name: Install packages
+  apt:
+    name: "{{packages}}"
+    state: latest
+    update_cache: yes

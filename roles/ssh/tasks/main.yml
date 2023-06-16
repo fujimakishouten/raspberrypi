@@ -1,0 +1,7 @@
+- name: Change SSH Port to 10022
+  copy:
+    src: sshd_config.d
+    dest: /etc/ssh
+    backup: yes
+  notify: restart ssh
+
