@@ -72,7 +72,7 @@
 
 - name: Generate Diffie-Hellman parameters file
   ansible.builtin.shell: |
-    openssl dhparam -out /etc/openvpn/server/dh.pem 4096
+    openssl dhparam -out /etc/openvpn/server/dh.pem {{DH.bits}}
   when: not dh.stat.exists
 
 - name: Check ta.key status

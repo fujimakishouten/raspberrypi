@@ -1,6 +1,8 @@
 ---
 CA:
     serverName: vpn.example.com
+DH:
+    bits: 2048
 OpenVPN:
     server: 10.8.0.0 255.255.255.0
     pushes:
