@@ -1,4 +1,5 @@
 - import_playbook: ./playbooks/common.yml
 - import_playbook: ./playbooks/docker.yml
 - import_playbook: ./playbooks/ssh.yml
-
+- import_playbook: ./playbooks/dhcpcd.yml
+- import_playbook: ./playbooks/wi-fi.yml

@@ -1,0 +1,7 @@
+---
+- name: Copy dhcpcd.conf file
+  ansible.builtin.template:
+    src: dhcpcd.conf.j2
+    dest: /etc/dhcpcd.conf
+    backup: yes
+  notify: restart dhcpcd
