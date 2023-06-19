@@ -1,0 +1,33 @@
+---
+CA:
+    key:
+        type: rsa
+        size: 4096
+    cert:
+        type: rsa
+        lifetime: 3652
+        dn:
+          C: JP
+          O: example.com
+          CN: vpn.example.com
+server:
+    key:
+        type: rsa
+        size: 4096
+        lifetime: 1826
+    cert:
+        type: rsa
+        lifetime: 1826
+        dn:
+          C: JP
+          O: example.com
+          CN: vpn.example.com
+        sans:
+          - vpn.example.com
+ikev2:
+  leftid: "@vpn.example.com"
+  rightsourceip: 10.0.0.200-10.0.0.250
+  rightdns: 10.0.0.1
+  users:
+    - name: user
+      password: password

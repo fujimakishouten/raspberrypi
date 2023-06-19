@@ -1,0 +1,93 @@
+---
+- name: Install packages
+  ansible.builtin.apt:
+    name:
+      - openvpn
+    state: latest
+    update_cache: yes
+
+- name: Copy easy-rsa
+  ansible.builtin.copy:
+    src: /usr/share/easy-rsa
+    dest: /etc/openvpn
+    backup: yes
+    remote_src: true
+
+- name: Copy easy-rsa vars file
+  ansible.builtin.template:
+    src: vars.j2
+    dest: /etc/openvpn/easy-rsa/vars
+    backup: yes
+
+- name: Check CA.crt status
+  ansible.builtin.stat:
+    path: /etc/openvpn/easy-rsa/pki/ca.crt
+  register: pki
+
+- name: Generate CA
+  ansible.builtin.shell: |
+    ./easyrsa init-pki
+    ./easyrsa build-ca nopass
+  args:
+    chdir: /etc/openvpn/easy-rsa
+  environment:
+    EASYRSA: /etc/openvpn/easy-rsa
+    EASYRSA_VARS_FILE: /etc/openvpn/easy-rsa/vars
+  when: not pki.stat.exists
+
+- name: Check server.key status
+  ansible.builtin.stat:
+    path: /etc/openvpn/easy-rsa/pki/private/{{CA.serverName}}.key
+  register: serverKey
+
+- name: Generate server key
+  ansible.builtin.shell: |
+    ./easyrsa gen-req {{CA.serverName}} nopass
+  args:
+    chdir: /etc/openvpn/easy-rsa
+  environment:
+    EASYRSA: /etc/openvpn/easy-rsa
+    EASYRSA_VARS_FILE: /etc/openvpn/easy-rsa/vars
+  when: not serverKey.stat.exists
+
+- name: Check server.crt status
+  ansible.builtin.stat:
+    path: /etc/openvpn/easy-rsa/pki/issued/{{CA.serverName}}.crt
+  register: serverCert
+
+- name: Generate server.crt
+  ansible.builtin.shell: |
+    ./easyrsa sign-req server {{CA.serverName}}
+  args:
+    chdir: /etc/openvpn/easy-rsa
+  environment:
+    EASYRSA: /etc/openvpn/easy-rsa
+    EASYRSA_VARS_FILE: /etc/openvpn/easy-rsa/vars
+  when: not serverCert.stat.exists
+
+- name: Check dh.pem status
+  ansible.builtin.stat:
+    path: /etc/openvpn/server/dh.pem
+  register: dh
+
+- name: Generate Diffie-Hellman parameters file
+  ansible.builtin.shell: |
+    openssl dhparam -out /etc/openvpn/server/dh.pem 4096
+  when: not dh.stat.exists
+
+- name: Check ta.key status
+  ansible.builtin.stat:
+    path: /etc/openvpn/server/dh.pem
+  register: hmac
+
+- name: Generate HMAC key
+  ansible.builtin.shell: |
+    openvpn --genkey --secret /etc/openvpn/server/ta.key
+  when: not hmac.stat.exists
+
+- name: Copy OpenVPN server.conf
+  ansible.builtin.template:
+    src: server.conf.j2
+    dest: /etc/openvpn/server/server.conf
+    backup: yes
+  notify: restart openvpn

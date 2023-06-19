@@ -1,0 +1,21 @@
+---
+CA:
+    serverName: vpn.example.com
+OpenVPN:
+    server: 10.8.0.0 255.255.255.0
+    pushes:
+        - "10.0.0.1 255.255.255.0"
+EasyRSA:
+    EASYRSA_KEY_SIZE: 2048
+    EASYRSA_ALGO: rsa
+    EASYRSA_CURVE: secp384r1
+    EASYRSA_DIGEST: sha256
+    EASYRSA_REQ_CN: vpn.example.com
+    EASYRSA_REQ_COUNTRY: JP
+    EASYRSA_REQ_PROVINCE: Tokyo
+    EASYRSA_REQ_CITY: .
+    EASYRSA_REQ_ORG: example.com
+    EASYRSA_REQ_EMAIL: example@example.com
+    EASYRSA_REQ_OU: .
+    EASYRSA_CA_EXPIRE: 3652
+    EASYRSA_CERT_EXPIRE: 1826

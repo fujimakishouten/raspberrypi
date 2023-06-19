@@ -1,0 +1,59 @@
+# ipsec.conf - strongSwan IPsec configuration file
+
+# basic configuration
+
+config setup
+    # strictcrlpolicy=yes
+    charondebug = "ike 1, knl 1, cfg 0"
+    uniqueids = no
+
+# Add connections here.
+
+conn ikev2
+    auto = add
+    compress = no
+    type = tunnel
+    keyexchange = ikev2
+    fragmentation = yes
+    forceencaps = yes
+
+    dpdaction = clear
+    dpddelay = 300s
+    rekey = no
+
+    left = %any
+    leftid = {{ikev2.leftid}}
+    leftcert = /etc/ipsec.d/certs/vpnHostCert.pem
+    leftsendcert=always
+    leftsubnet=0.0.0.0/0
+
+    right = %any
+    rightid = %any
+    rightauth = eap-mschapv2
+    rightsourceip = {{ikev2.rightsourceip}}
+    rightdns = {{ikev2.rightdns}}
+    rightsendcert = never
+
+    eap_identity=%identity
+
+     ike=chacha20poly1305-sha512-curve25519-prfsha512,aes256gcm16-sha384-prfsha384-ecp384,aes256-sha1-modp1024,aes128-sha1-modp1024,3des-sha1-modp1024!
+        esp=chacha20poly1305-sha512,aes256gcm16-ecp384,aes256-sha256,aes256-sha1,3des-sha1!
+
+# Sample VPN connections
+
+#conn sample-self-signed
+#      leftsubnet=10.1.0.0/16
+#      leftcert=selfCert.der
+#      leftsendcert=never
+#      right=192.168.0.2
+#      rightsubnet=10.2.0.0/16
+#      rightcert=peerCert.der
+#      auto=start
+
+#conn sample-with-ca-cert
+#      leftsubnet=10.1.0.0/16
+#      leftcert=myCert.pem
+#      right=192.168.0.2
+#      rightsubnet=10.2.0.0/16
+#      rightid="C=CH, O=Linux strongSwan CN=peer name"
+#      auto=start
