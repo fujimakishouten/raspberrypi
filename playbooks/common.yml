@@ -5,3 +5,4 @@
     - ../roles/common
     - ../roles/apt
     - ../roles/nftables
+    - ../roles/watchdog
