@@ -1,15 +1,16 @@
+---
 - name: Generate locale
-  locale_gen:
+  ansible.builtin.locale_gen:
     name: "{{item}}"
     state: present
   with_items: "{{locales}}"
 
 - name: Update locale
-  shell: |
+  ansible.builtin.shell: |
     dpkg-reconfigure --frontend noninteractive locales
     update-locale LANG={{locales[0]}} LANGUAGE={{locales[0]}} LC_ALL={{locales[0]}}
 
 - name: Set timezone
-  shell: |
+  ansible.builtin.shell: |
     echo {{timezone}} > /etc/timezone
     dpkg-reconfigure --frontend noninteractive tzdata

@@ -1,7 +1,8 @@
-- name: Change SSH Port to 10022
-  copy:
-    src: sshd_config.d
-    dest: /etc/ssh
+---
+- name: Change SSH Port
+  ansible.builtin.template:
+    src: port.conf.j2
+    dest: /etc/ssh/sshd_config.d/port.conf
     backup: yes
   notify: restart ssh
 
