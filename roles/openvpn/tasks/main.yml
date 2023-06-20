@@ -77,7 +77,7 @@
 
 - name: Check ta.key status
   ansible.builtin.stat:
-    path: /etc/openvpn/server/dh.pem
+    path: /etc/openvpn/server/ta.key
   register: hmac
 
 - name: Generate HMAC key
