@@ -17,7 +17,7 @@ packages:
   - direnv
   - dnsutils
   - emacs-nox
-  - exa
+  - eza
   - fd-find
   - fzf
   - git
