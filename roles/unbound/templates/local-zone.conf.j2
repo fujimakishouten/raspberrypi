@@ -1,0 +1,22 @@
+### local-zone.conf
+#
+# local-zone: <zone> <type>
+# type
+#     deny
+#     refuse
+#     static
+#     transparent
+#     typetransparent
+#     redirect
+#     nodefault
+#
+# Example
+#     loal-zone: "local." static
+#
+
+### Local zone
+server:
+#    local-zone: "local." static
+    {%for zone in local.zone%}local-zone: "{{zone}}." static
+    {%endfor%}
+

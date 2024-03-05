@@ -1,0 +1,14 @@
+### local-data.conf
+#
+# local-data: <resource record string>
+#
+# Examples:
+#     local-data: "example.local. A 127.0.0.1"
+#
+
+### Local data
+server:
+#    local-data "example.local. A 127.0.0.1"
+    {%for data in local.data %}local-data: "{{data.domain}}. {{data.type}} {{data.address}}"
+    {%endfor%}
+

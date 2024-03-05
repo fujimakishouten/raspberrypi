@@ -1,0 +1,26 @@
+---
+- name: Install unbound
+  ansible.builtin.apt:
+    name:
+      - unbound
+    state: latest
+
+- name: Copy server.conf
+  ansible.builtin.copy:
+    src: server.conf
+    dest: /etc/unbound/unbound.conf.d/server.conf
+    backup: yes
+  notify: restart unbound
+
+- name: Copy configs
+  ansible.builtin.template:
+      src: "{{item}}.j2"
+      dest: /etc/unbound/unbound.conf.d/{{item}}
+      backup: yes
+  with_items:
+    - forward-zone.conf
+    - local-data.conf
+    - local-zone.conf
+    - stub-zone.conf
+  notify: restart unbound
+

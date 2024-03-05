@@ -1,0 +1,5 @@
+- name: Install asdf
+  ansible.builtin.git:
+    repo: https://github.com/asdf-vm/asdf.git
+    dest: /opt/asdf
+    update: true

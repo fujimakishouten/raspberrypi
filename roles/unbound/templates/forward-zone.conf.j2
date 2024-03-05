@@ -1,0 +1,20 @@
+### forward-zone.conf
+#
+# forward-zone:
+#     name: "."
+#     forward-addr: 2001:4860:4860::8888
+#     forward-addr: 2001:4860:4860::8844
+#     forward-addr: 8.8.8.8
+#     forward-addr: 8.8.4.4
+#
+# Example
+#     loal-zone: "local." static
+#
+
+### Local zone
+server:
+    forward-zone:
+        name: "{{forward.zone.name}}"
+        {%for address in forward.zone.addresses%}forward-addr: {{address}}
+        {%endfor%}
+
