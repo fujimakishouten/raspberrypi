@@ -1,0 +1,10 @@
+[Interface]
+Address = {{client.interface.address}}
+DNS = {{client.interface.dns}}
+PrivateKey = {{clientPrivateKey.stdout}}
+
+[Peer]
+PublicKey = {{serverPublicKey.stdout}}
+Endpoint = {{client.peer.endpoint}}
+AllowedIPs = {{client.peer.allowed_ips}}
+

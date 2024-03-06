@@ -1,0 +1,10 @@
+[Interface]
+Address = {{server.interface.address}}
+ListenPort = {{server.interface.listen_port}}
+PrivateKey = {{serverPrivateKey.stdout}}
+
+[Peer]
+AllowedIPs = {{server.peer.allowed_ips}}
+PersistentKeepAlive = {{server.peer.keep_alive}}
+PublicKey = {{clientPublicKey.stdout}}
+

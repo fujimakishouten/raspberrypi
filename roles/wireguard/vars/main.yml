@@ -1,0 +1,16 @@
+---
+server:
+    interface:
+        address: "172.17.1.1/24"
+        listen_port: 51820
+    peer:
+        allowed_ips: "172.17.1.210"
+        keep_alive: 30
+client:
+    interface:
+        address: "172.17.1.210"
+        dns: "172.16.1.1"
+    peer:
+        endpoint: "127.0.01:51820"
+        allowed_ips: "0.0.0.0/0"
+
