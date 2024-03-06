@@ -11,6 +11,6 @@ client:
         address: "172.17.1.210"
         dns: "172.16.1.1"
     peer:
-        endpoint: "127.0.01:51820"
+        endpoint: " 219.117.205.216:51820"
         allowed_ips: "0.0.0.0/0"
 

@@ -1,5 +1,6 @@
 ---
-- name: restart strongswan
+- name: restart wireguard
   ansible.builtin.service:
-    name: strongswan-starter
+    name: wg-quick@gw0
     state: restarted
+

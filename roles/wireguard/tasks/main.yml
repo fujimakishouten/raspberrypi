@@ -76,10 +76,18 @@
     dest: /etc/wireguard/wg0.conf
     mode: 600
     backup: yes
+  notify: restart wireguard
 
 - name: Copy client.conf file
   ansible.builtin.template:
     src: client.conf.j2
     dest: /etc/wireguard/wg0.client.conf
     backup: yes
+
+- name: Enable wiregurd service
+  ansible.builtin.service:
+    name: wg-quick@wg0
+    state: started
+    enabled: true
+
 
