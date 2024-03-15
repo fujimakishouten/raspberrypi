@@ -1,0 +1,13 @@
+#!/bin/bash
+
+cat /etc/openvpn/client/base.conf \
+    <(echo -e '<ca>') \
+    /etc/openvpn/easy-rsa/pki/ca.crt \
+    <(echo -e '</ca>\n<cert>') \
+    /etc/openvpn/easy-rsa/pki/issued/{{CA.clientName}}.crt \
+    <(echo -e '</cert>\n<key>') \
+    /etc/openvpn/easy-rsa/pki/private/{{CA.clientName}}.key \
+    <(echo -e '</key>\n<tls-auth>') \
+    /etc/openvpn/easy-rsa/ta.key \
+    <(echo -e '</tls-auth>')
+

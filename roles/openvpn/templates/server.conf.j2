@@ -82,7 +82,7 @@ key /etc/openvpn/easy-rsa/pki/private/{{CA.serverName}}.key  # This file should 
 # Diffie hellman parameters.
 # Generate your own with:
 #   openssl dhparam -out dh2048.pem 2048
-dh /etc/openvpn/server/dh.pem
+dh none
 
 # Network topology
 # Should be subnet (addressing via IP)
@@ -131,7 +131,7 @@ ifconfig-pool-persist /var/log/openvpn/ipp.txt
 # bound to a DHCP client.
 ;server-bridge
 
-    # Push routes to the client to allow it
+# Push routes to the client to allow it
 # to reach other private subnets behind
 # the server.  Remember that these
 # private subnets will also need
@@ -140,7 +140,7 @@ ifconfig-pool-persist /var/log/openvpn/ipp.txt
 # back to the OpenVPN server.
 ;push "route 192.168.10.0 255.255.255.0"
 ;push "route 192.168.20.0 255.255.255.0"
-{%for push in OpenVPN.pushes%}push "route {{push}}"
+{%for route in OpenVPN.route%}push "route {{route}}"
 {%endfor%}
 
 # To assign specific IP addresses to specific
@@ -191,7 +191,7 @@ ifconfig-pool-persist /var/log/openvpn/ipp.txt
 # (The OpenVPN server machine may need to NAT
 # or bridge the TUN/TAP interface to the internet
 # in order for this to work properly).
-;push "redirect-gateway def1 bypass-dhcp"
+push "redirect-gateway def1 bypass-dhcp"
 
 # Certain Windows-specific network settings
 # can be pushed to clients, such as DNS
@@ -201,6 +201,8 @@ ifconfig-pool-persist /var/log/openvpn/ipp.txt
 # DNS servers provided by opendns.com.
 ;push "dhcp-option DNS 208.67.222.222"
 ;push "dhcp-option DNS 208.67.220.220"
+{%for dns in OpenVPN.dns%}push "dhcp-option DNS {{dns}}"
+{%endfor%}
 
 # Uncomment this directive to allow different
 # clients to be able to "see" each other.
@@ -241,9 +243,9 @@ keepalive 10 120
 #
 # The server and each client must have
 # a copy of this key.
-# The second parameter should be '0'
+# The second parameter should be '0'b
 # on the server and '1' on the clients.
-tls-auth /etc/openvpn/server/ta.key 0 # This file is secret
+tls-auth /etc/openvpn/easy-rsa/ta.key 0 # This file is secret
 
 # Select a cryptographic cipher.
 # This config item must be copied to
@@ -251,13 +253,13 @@ tls-auth /etc/openvpn/server/ta.key 0 # This file is secret
 # Note that v2.4 client/server will automatically
 # negotiate AES-256-GCM in TLS mode.
 # See also the ncp-cipher option in the manpage
-cipher AES-256-CBC
+cipher AES-256-GCM
 
 # Enable compression on the VPN link and push the
 # option to the client (v2.4+ only, for earlier
 # versions see below)
-;compress lz4-v2
-;push "compress lz4-v2"
+compress lz4-v2
+push "compress lz4-v2"
 
 # For compression compatible with older clients use comp-lzo
 # If you enable it here, you must also
@@ -273,8 +275,8 @@ cipher AES-256-CBC
 #
 # You can uncomment this on non-Windows
 # systems after creating a dedicated user.
-;user openvpn
-;group openvpn
+user nobody
+group nogroup
 
 # The persist options will try to avoid
 # accessing certain resources on restart
@@ -319,4 +321,5 @@ explicit-exit-notify 1
 # Security settings
 auth SHA512
 tls-version-min 1.2
-tls-cipher TLS-DHE-RSA-WITH-AES-256-GCM-SHA384:TLS-DHE-RSA-WITH-AES-128-GCM-SHA256:TLS-DHE-RSA-WITH-AES-256-CBC-SHA:TLS-DHE-RSA-WITH-CAMELLIA-256-CBC-SHA:TLS-DHE-RSA-WITH-AES-128-CBC-SHA:TLS-DHE-RSA-WITH-CAMELLIA-128-CBC-SHA
+
+

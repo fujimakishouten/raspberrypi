@@ -35,6 +35,11 @@
     EASYRSA_VARS_FILE: /etc/openvpn/easy-rsa/vars
   when: not pki.stat.exists
 
+- name: Ensure OpenVPN server directory
+  ansible.builtin.file:
+    path: /etc/openvpn/server
+    state: directory
+
 - name: Check server.key status
   ansible.builtin.stat:
     path: /etc/openvpn/easy-rsa/pki/private/{{CA.serverName}}.key
@@ -65,25 +70,50 @@
     EASYRSA_VARS_FILE: /etc/openvpn/easy-rsa/vars
   when: not serverCert.stat.exists
 
-- name: Check dh.pem status
-  ansible.builtin.stat:
-    path: /etc/openvpn/server/dh.pem
-  register: dh
-
-- name: Generate Diffie-Hellman parameters file
-  ansible.builtin.shell: |
-    openssl dhparam -out /etc/openvpn/server/dh.pem {{DH.bits}}
-  when: not dh.stat.exists
-
 - name: Check ta.key status
   ansible.builtin.stat:
-    path: /etc/openvpn/server/ta.key
+    path: /etc/openvpn/easy-rsa/ta.key
   register: hmac
 
 - name: Generate HMAC key
   ansible.builtin.shell: |
-    openvpn --genkey --secret /etc/openvpn/server/ta.key
+    openvpn --genkey --secret /etc/openvpn/easy-rsa/ta.key
   when: not hmac.stat.exists
+
+- name: Ensure OpenVPN client directory
+  ansible.builtin.file:
+    path: /etc/openvpn/client
+    state: directory
+
+- name: Check client.key status
+  ansible.builtin.stat:
+    path: /etc/openvpn/easy-rsa/pki/private/{{CA.clientName}}.key
+  register: clientKey
+
+- name: Generate client key
+  ansible.builtin.shell: |
+    ./easyrsa gen-req {{CA.clientName}} nopass
+  args:
+    chdir: /etc/openvpn/easy-rsa
+  environment:
+    EASYRSA: /etc/openvpn/easy-rsa
+    EASYRSA_VARS_FILE: /etc/openvpn/easy-rsa/vars
+  when: not clientKey.stat.exists
+
+- name: Check client.crt status
+  ansible.builtin.stat:
+    path: /etc/openvpn/easy-rsa/pki/issued/{{CA.clientName}}.crt
+  register: clientCert
+
+- name: Generate client.crt
+  ansible.builtin.shell: |
+    ./easyrsa sign-req client {{CA.clientName}}
+  args:
+    chdir: /etc/openvpn/easy-rsa
+  environment:
+    EASYRSA: /etc/openvpn/easy-rsa
+    EASYRSA_VARS_FILE: /etc/openvpn/easy-rsa/vars
+  when: not clientCert.stat.exists
 
 - name: Copy OpenVPN server.conf
   ansible.builtin.template:
@@ -91,3 +121,29 @@
     dest: /etc/openvpn/server/server.conf
     backup: yes
   notify: restart openvpn
+
+- name: Copy OpenVPN client base.conf
+  ansible.builtin.template:
+    src: client.conf.j2
+    dest: /etc/openvpn/client/base.conf
+    backup: true
+
+- name: Copy client-config.sh
+  ansible.builtin.template:
+    src: client-config.sh.j2
+    dest: /etc/openvpn/client/client-config.sh
+    backup: true
+    mode: 0755
+
+- name: Generate client config file
+  ansible.builtin.shell: |
+    ./client-config.sh > ./{{CA.clientName}}.conf
+  args:
+    chdir: /etc/openvpn/client
+
+- name: Enable OpenVPN service
+  ansible.builtin.service:
+    name: openvpn-server@server
+    state: started
+    enabled: true
+
