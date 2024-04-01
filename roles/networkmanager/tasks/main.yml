@@ -5,17 +5,17 @@
         ipv4.method manual \
         ipv4.address "{{item.ipv4.address}}" \
         ipv4.gateway "{{item.ipv4.gateway}}" \
-        ipv4.dns "{{item.ipv4.gateway}}"
+        ipv4.dns "{{item.ipv4.dns}}"
   with_items: "{{connections}}"
   when: item.ipv4 is defined
 
 - name: Set static IPv6 address
   ansible.builtin.shell: |
     nmcli connection modify "{{item.name}}" \
-        ipv4.method manual \
-        ipv4.address "{{item.ipv4.address}}" \
-        ipv4.gateway "{{item.ipv4.gateway}}" \
-        ipv4.dns "{{item.ipv4.gateway}}"
+        ipv6.method manual \
+        ipv6.address "{{item.ipv6.address}}" \
+        ipv6.gateway "{{item.ipv6.gateway}}" \
+        ipv6.dns "{{item.ipv6.dns}}"
   with_items: "{{connections}}"
   when: item.ipv6 is defined
 
