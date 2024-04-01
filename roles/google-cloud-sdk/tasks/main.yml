@@ -1,0 +1,33 @@
+---
+- name: Add required packages
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - sudo
+    state: latest
+
+- name: Add Google cloud apt key
+  ansible.builtin.get_url:
+    url: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+    dest: "/usr/share/keyrings/cloud.google.asc"
+
+- name: Copy google-cloud-sdk.list
+  ansible.builtin.copy:
+    src: "sources.list.d/google-cloud-sdk.list"
+    dest: /etc/apt/sources.list.d
+
+- name: Update cache
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Install google-cloud-sdk
+  ansible.builtin.apt:
+    name:
+      - google-cloud-sdk
+      - google-cloud-sdk-gke-gcloud-auth-plugin
+    state: latest
+
+

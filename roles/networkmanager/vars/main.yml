@@ -1,0 +1,8 @@
+---
+connections:
+  - name: "Wired connection 1"
+    ipv4:
+      address: "10.0.0.10"
+      gateway: "10.0.0.1"
+      dns: "10.0.0.1"
+
