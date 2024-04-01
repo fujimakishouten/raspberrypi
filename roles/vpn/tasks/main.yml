@@ -1,0 +1,8 @@
+---
+- name: Enable IP forwarding
+  ansible.builtin.copy:
+    src: 99-vpn.conf
+    dest: /etc/sysctl.d/99-vpn.conf
+    backup: no
+  notify: reload sysctl
+

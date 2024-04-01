@@ -6,3 +6,5 @@
     - ../roles/apt
     - ../roles/nftables
     - ../roles/watchdog
+    - ../roles/vpn
+
