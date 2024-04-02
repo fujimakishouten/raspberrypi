@@ -1,0 +1,16 @@
+---
+packages:
+  - autoconf
+  - bison
+  - libcurl4-gnutls-dev
+  - libgd-dev
+  - libonig-dev
+  - libpq-devac
+  - libreadline-dev
+  - libsqlite3-dev
+  - libssl-dev
+  - libxml2-dev
+  - libzip-dev
+  - re2c
+  - zlib1g-dev
+
