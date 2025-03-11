@@ -42,6 +42,7 @@ packages:
   - peco
   - prettyping
   - pwgen
+  - rclone
   - ripgrep
   - rkhunter
   - rlwrap
@@ -62,6 +63,7 @@ packages:
   - vrms
   - w3m
   - whois
+  - xh
   - zoxide
   - zsh
   - zsh-autosuggestions
