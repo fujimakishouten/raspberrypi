@@ -1,60 +1,59 @@
 ---
 stub:
   zone:
-    - domain: eden.local
-      address: 127.0.0.1@10053
+    - domain: "eden.local"
+      address: "127.0.0.1@10053"
 forward:
   zone:
     name: "."
     addresses:
-      - 2a07:a8c0::df:5ecf
-      - 2a07:a8c1::df:5ecf
-      - 45.90.28.206
-      - 45.90.30.206
+      - "2a07:a8c0::df:5ecf"
+      - "2a07:a8c1::df:5ecf"
+      - "45.90.28.206"
+      - "45.90.30.206"
 local:
   zone:
-    - eden.local
+    - "eden.local"
   data:
-    - domain: storage.plume.ne.jp
-      type: A
-      address: 172.16.1.10
-    - domain: elsiole.eden.local
-      type: A
-      address: 172.16.1.10
-    - domain: gs108pe.eden.local
-      type: A
-      address: 172.16.1.7
-    - domain: gs308e.eden.local
-      type: A
-      address: 172.16.1.6
-    - domain: happytrigger.eden.local
-      type: A
-      address: 172.16.1.204
-    - domain: harvester.eden.local
-      type: A
-      address: 172.16.1.205
-    - domain: kung-fufighter.eden.local
-      type: A
-      address: 172.16.1.202
-    - domain: kungfufighter.eden.local
-      type: A
-      address: 172.16.1.202
-    - domain: landisk.eden.local
-      type: A
-      address: 172.16.1.12
-    - domain: luckystar.eden.local
-      type: A
-      address: 172.16.1.201
-    - domain: luxiole.eden.local
-      type: A
-      address: 172.16.1.11
-    - domain: printer.eden.local
-      type: A
-      address: 172.16.1.15
-    - domain: rtx1210.eden.local
-      type: A
-      address: 172.16.1.1
-    - domain: sharpshooter.eden.local
-      type: A
-      address: 172.16.1.206
-
+    - domain: "storage.plume.ne.jp"
+      type: "A"
+      address: "172.16.1.10"
+    - domain: "elsiole.eden.local"
+      type: "A"
+      address: "172.16.1.10"
+    - domain: "gs108pe.eden.local"
+      type: "A"
+      address: "172.16.1.7"
+    - domain: "gs308e.eden.local"
+      type: "A"
+      address: "172.16.1.6"
+    - domain: "happytrigger.eden.local"
+      type: "A"
+      address: "172.16.1.204"
+    - domain: "harvester.eden.local"
+      type: "A"
+      address: "172.16.1.205"
+    - domain: "kung-fufighter.eden.local"
+      type: "A"
+      address: "172.16.1.202"
+    - domain: "kungfufighter.eden.local"
+      type: "A"
+      address: "172.16.1.202"
+    - domain: "landisk.eden.local"
+      type: "A"
+      address: "172.16.1.12"
+    - domain: "luckystar.eden.local"
+      type: "A"
+      address: "172.16.1.201"
+    - domain: "luxiole.eden.local"
+      type: "A"
+      address: "172.16.1.11"
+    - domain: "printer.eden.local"
+      type: "A"
+      address: "172.16.1.15"
+    - domain: "rtx1210.eden.local"
+      type: "A"
+      address: "172.16.1.1"
+    - domain: "sharpshooter.eden.local"
+      type: "A"
+      address: "172.16.1.206"

@@ -1,5 +1,5 @@
 ---
 network:
-  ssid: raspberrypi
-  identity: pi
-  password: password
+  ssid: "raspberrypi"
+  identity: "pi"
+  password: "password"

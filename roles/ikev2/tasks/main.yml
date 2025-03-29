@@ -1,63 +1,63 @@
 ---
-- name: Install packages
+- name: "Install packages"
   ansible.builtin.apt:
     name:
-      - strongswan
-      - strongswan-pki
-      - libcharon-extra-plugins
-      - libcharon-extauth-plugins
-      - libstrongswan-extra-plugins
-    state: latest
-    update_cache: yes
+      - "strongswan"
+      - "strongswan-pki"
+      - "libcharon-extra-plugins"
+      - "libcharon-extauth-plugins"
+      - "libstrongswan-extra-plugins"
+    state: "latest"
+    update_cache: true
 
-- name: Check strongswanKey.pem status
+- name: "Check strongswanKey.pem status"
   ansible.builtin.stat:
-    path: /etc/ipsec.d/private/strongswanKey.pem
-  register: strongswanKey
+    path: "/etc/ipsec.d/private/strongswanKey.pem"
+  register: "strongswanKey"
 
-- name: Generate strongswanKey.pem
+- name: "Generate strongswanKey.pem"
   ansible.builtin.shell: |
     ipsec pki --gen --type {{CA.key.type}} --size {{CA.key.size}} --outform pem > /etc/ipsec.d/private/strongswanKey.pem
-  when: not strongswanKey.stat.exists
+  when: "not strongswanKey.stat.exists"
 
-- name: Change strongswanKey mode
+- name: "Change strongswanKey mode"
   ansible.builtin.file:
-    path: /etc/ipsec.d/private/strongswanKey.pem
+    path: "/etc/ipsec.d/private/strongswanKey.pem"
     mode: 0600
 
-- name: Check strongswanCert.pem status
+- name: "Check strongswanCert.pem status"
   ansible.builtin.stat:
-    path: /etc/ipsec.d/cacerts/strongswanCert.pem
-  register: strongswanCert
+    path: "/etc/ipsec.d/cacerts/strongswanCert.pem"
+  register: "strongswanCert"
 
-- name: Generate strongswanCert.pem
+- name: "Generate strongswanCert.pem"
   ansible.builtin.shell: |
     ipsec pki --self --ca --lifetime {{CA.cert.lifetime}} --type {{CA.cert.type}} \
            --dn "C={{CA.cert.dn.C}}, O={{CA.cert.dn.O}}, CN={{CA.cert.dn.CN}}" \
-    	   --in /etc/ipsec.d/private/strongswanKey.pem --outform pem > /etc/ipsec.d/cacerts/strongswanCert.pem
-  when: not strongswanCert.stat.exists
+         --in /etc/ipsec.d/private/strongswanKey.pem --outform pem > /etc/ipsec.d/cacerts/strongswanCert.pem
+  when: "not strongswanCert.stat.exists"
 
-- name: Check vpnHostKey.pem status
+- name: "Check vpnHostKey.pem status"
   ansible.builtin.stat:
-    path: /etc/ipsec.d/private/vpnHostKey.pem
-  register: vpnHostKey
+    path: "/etc/ipsec.d/private/vpnHostKey.pem"
+  register: "vpnHostKey"
 
-- name: Generate vpnHostKey.pem
+- name: "Generate vpnHostKey.pem"
   ansible.builtin.shell: |
     ipsec pki --gen --type {{server.key.type}} --size {{server.key.size}} --outform pem > /etc/ipsec.d/private/vpnHostKey.pem
-  when: not vpnHostKey.stat.exists
+  when: "not vpnHostKey.stat.exists"
 
-- name: Change vpnHostKey mode
+- name: "Change vpnHostKey mode"
   ansible.builtin.file:
-    path: /etc/ipsec.d/private/vpnHostKey.pem
+    path: "/etc/ipsec.d/private/vpnHostKey.pem"
     mode: 0600
 
-- name: Check vpnHostCert.pem status
+- name: "Check vpnHostCert.pem status"
   ansible.builtin.stat:
-    path: /etc/ipsec.d/certs/vpnHostCert.pem
-  register: vpnHostCert
+    path: "/etc/ipsec.d/certs/vpnHostCert.pem"
+  register: "vpnHostCert"
 
-- name: Generate vpnHostCert.pem
+- name: "Generate vpnHostCert.pem"
   ansible.builtin.shell: |
     ipsec pki --pub --in /etc/ipsec.d/private/vpnHostKey.pem --type {{server.cert.type}} | \
         ipsec pki --issue --lifetime {{server.cert.lifetime}} \
@@ -66,18 +66,18 @@
             {%if server.cert.sans %}--san {{server.cert.sans|join(" --san ")}} \
             {%endif%}
             --flag serverAuth --flag ikeIntermediate > /etc/ipsec.d/certs/vpnHostCert.pem
-  when: not vpnHostCert.stat.exists
+  when: "not vpnHostCert.stat.exists"
 
-- name: Copy ipsec.conf
+- name: "Copy ipsec.conf"
   ansible.builtin.template:
-    src: ipsec.conf.j2
-    dest: /etc/ipsec.conf
-    backup: yes
-  notify: restart strongswan
+    src: "ipsec.conf.j2"
+    dest: "/etc/ipsec.conf"
+    backup: true
+  notify: "restart strongswan"
 
-- name: Copy ipsec.secrets
+- name: "Copy ipsec.secrets"
   ansible.builtin.template:
-    src: ipsec.secrets.j2
-    dest: /etc/ipsec.secrets
-    backup: yes
-  notify: restart strongswan
+    src: "ipsec.secrets.j2"
+    dest: "/etc/ipsec.secrets"
+    backup: true
+  notify: "restart strongswan"

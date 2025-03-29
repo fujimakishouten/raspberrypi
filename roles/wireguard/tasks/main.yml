@@ -1,93 +1,91 @@
 ---
-- name: Install packages
+- name: "Install packages"
   ansible.builtin.apt:
     name:
-      - wireguard
-    state: latest
-    update_cache: yes
+      - "wireguard"
+    state: "latest"
+    update_cache: true
 
-- name: Ensure key directory
+- name: "Ensure key directory"
   ansible.builtin.file:
-    path: /etc/wireguard/keys
-    state: directory
+    path: "/etc/wireguard/keys"
+    state: "directory"
     mode: 0700
 
-- name: Change config directory mode
+- name: "Change config directory mode"
   ansible.builtin.file:
-    path: /etc/wireguard
-    state: directory
+    path: "/etc/wireguard"
+    state: "directory"
     mode: 0755
 
-- name: Check server key status
+- name: "Check server key status"
   ansible.builtin.stat:
-    path: /etc/wireguard/keys/server.key
-  register: serverKey
+    path: "/etc/wireguard/keys/server.key"
+  register: "serverKey"
 
-- name: Generate server key pair
+- name: "Generate server key pair"
   ansible.builtin.shell: |
-    wg genkey | tee /etc/wireguard/keys/server.key | wg pubkey > /etc/wireguard/keys/server.pub
-  when: not serverKey.stat.exists
+    wg genkey | tee "/etc/wireguard/keys/server.key" | wg pubkey > "/etc/wireguard/keys/server.pub"
+  when: "not serverKey.stat.exists"
 
-- name: Change server key mode
+- name: "Change server key mode"
   ansible.builtin.file:
-    path: /etc/wireguard/keys/server.key
-    state: file
+    path: "/etc/wireguard/keys/server.key"
+    state: "file"
     mode: 0600
 
-- name: Check client key status
+- name: "Check client key status"
   ansible.builtin.stat:
-    path: /etc/wireguard/keys/client.key
-  register: clientKey
+    path: "/etc/wireguard/keys/client.key"
+  register: "clientKey"
 
-- name: Generate client key pair
+- name: "Generate client key pair"
   ansible.builtin.shell: |
-    wg genkey | tee /etc/wireguard/keys/client.key | wg pubkey > /etc/wireguard/keys/client.pub
-  when: not clientKey.stat.exists
+    wg genkey | tee "/etc/wireguard/keys/client.key" | wg pubkey > "/etc/wireguard/keys/client.pub"
+  when: "not clientKey.stat.exists"
 
-- name: Change client key mode
+- name: "Change client key mode"
   ansible.builtin.file:
-    path: /etc/wireguard/keys/client.key
-    state: file
+    path: "/etc/wireguard/keys/client.key"
+    state: "file"
     mode: 0600
 
-- name: Get server private key
+- name: "Get server private key"
   ansible.builtin.shell: |
-    cat /etc/wireguard/keys/server.key
-  register: serverPrivateKey
+    cat "/etc/wireguard/keys/server.key"
+  register: "serverPrivateKey"
 
-- name: Get server public key
+- name: "Get server public key"
   ansible.builtin.shell: |
-    cat /etc/wireguard/keys/server.pub
-  register: serverPublicKey
+    cat "/etc/wireguard/keys/server.pub"
+  register: "serverPublicKey"
 
-- name: Get client private key
+- name: "Get client private key"
   ansible.builtin.shell: |
-    cat /etc/wireguard/keys/client.key
-  register: clientPrivateKey
+    cat "/etc/wireguard/keys/client.key"
+  register: "clientPrivateKey"
 
-- name: Get client public key
+- name: "Get client public key"
   ansible.builtin.shell: |
-    cat /etc/wireguard/keys/client.pub
-  register: clientPublicKey
+    cat "/etc/wireguard/keys/client.pub"
+  register: "clientPublicKey"
 
-- name: Copy server.conf file
+- name: "Copy server.conf file"
   ansible.builtin.template:
-    src: server.conf.j2
-    dest: /etc/wireguard/wg0.conf
-    mode: 600
-    backup: yes
-  notify: restart wireguard
+    src: "server.conf.j2"
+    dest: "/etc/wireguard/wg0.conf"
+    mode: 0600
+    backup: true
+  notify: "restart wireguard"
 
-- name: Copy client.conf file
+- name: "Copy client.conf file"
   ansible.builtin.template:
-    src: client.conf.j2
-    dest: /etc/wireguard/wg0.client.conf
-    backup: yes
+    src: "client.conf.j2"
+    dest: "/etc/wireguard/wg0.client.conf"
+    backup: true
 
-- name: Enable wiregurd service
+- name: "Enable wiregurd service"
   ansible.builtin.service:
-    name: wg-quick@wg0
-    state: started
+    name: "wg-quick@wg0"
+    state: "started"
     enabled: true
-
-

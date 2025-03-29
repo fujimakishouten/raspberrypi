@@ -1,5 +1,5 @@
 ---
-- name: Set static IPv4 address
+- name: "Set static IPv4 address"
   ansible.builtin.shell: |
     nmcli connection modify "{{item.name}}" \
         ipv4.method manual \
@@ -7,9 +7,9 @@
         ipv4.gateway "{{item.ipv4.gateway}}" \
         ipv4.dns "{{item.ipv4.dns}}"
   with_items: "{{connections}}"
-  when: item.ipv4 is defined
+  when: "item.ipv4 is defined"
 
-- name: Set static IPv6 address
+- name: "Set static IPv6 address"
   ansible.builtin.shell: |
     nmcli connection modify "{{item.name}}" \
         ipv6.method manual \
@@ -17,10 +17,9 @@
         ipv6.gateway "{{item.ipv6.gateway}}" \
         ipv6.dns "{{item.ipv6.dns}}"
   with_items: "{{connections}}"
-  when: item.ipv6 is defined
+  when: "item.ipv6 is defined"
 
-- name: Restart NetworkManager
+- name: "Restart NetworkManager"
   ansible.builtin.service:
-    name: NetworkManager
-    state: restarted
-
+      name: "NetworkManager"
+      state: "restarted"

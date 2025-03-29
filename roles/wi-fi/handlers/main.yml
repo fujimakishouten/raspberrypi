@@ -1,5 +1,5 @@
 ---
-- name: restart wpa_supplicant
+- name: "restart wpa_supplicant"
   ansible.builtin.service:
-    name: wpa_supplicant
-    state: restarted
+    name: "wpa_supplicant"
+    state: "restarted"

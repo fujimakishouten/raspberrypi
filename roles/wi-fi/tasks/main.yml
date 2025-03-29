@@ -1,7 +1,7 @@
 ---
-- name: Copy wpa_supplicant.conf file
+- name: "Copy wpa_supplicant.conf file"
   ansible.builtin.template:
-    src: wpa_supplicant.conf.j2
-    dest: /etc/wpa_supplicant/wpa_supplicant.conf
-    backup: yes
-  notify: restart wpa_supplicant
+    src: "wpa_supplicant.conf.j2"
+    dest: "/etc/wpa_supplicant/wpa_supplicant.conf"
+    backup: true
+  notify: "restart wpa_supplicant"

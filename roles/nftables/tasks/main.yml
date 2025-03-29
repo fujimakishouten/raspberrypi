@@ -1,17 +1,17 @@
 ---
-- name: Install packages
+- name: "Install packages"
   ansible.builtin.apt:
     name:
-      - nftables
-    state: latest
-    update_cache: yes
+      - "nftables"
+    state: "latest"
+    update_cache: true
 
-- name: Copy nftables.conf
+- name: "Copy nftables.conf"
   ansible.builtin.copy:
     src: "{{item}}"
-    dest: /etc/nftables.conf
+    dest: "/etc/nftables.conf"
     mode: 0755
-    backup: yes
+    backup: true
   with_items:
-    - nftables.conf
-  notify: restart nftables
+    - "nftables.conf"
+  notify: "restart nftables"

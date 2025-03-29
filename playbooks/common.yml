@@ -1,10 +1,10 @@
-- hosts: all
-  become: yes
-  become_user: root
+---
+- hosts: "all"
+  become: true
+  become_user: "root"
   roles:
-    - ../roles/common
-    - ../roles/apt
-    - ../roles/nftables
-    - ../roles/watchdog
-    - ../roles/vpn
-
+    - "../roles/common"
+    - "../roles/apt"
+    - "../roles/nftables"
+    - "../roles/watchdog"
+    - "../roles/vpn"

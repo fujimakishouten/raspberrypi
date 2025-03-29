@@ -1,25 +1,24 @@
 ---
 CA:
-    serverName: server
-    clientName: client
+    serverName: "server"
+    clientName: "client"
 OpenVPN:
-    server: 10.8.0.0 255.255.255.0
+    server: "10.8.0.0 255.255.255.0"
     route:
         - "10.0.0.1 255.255.255.0"
     dns:
         - "10.10.0.1"
 EasyRSA:
     EASYRSA_KEY_SIZE: 4096
-    EASYRSA_ALGO: ed
-    EASYRSA_CURVE: ed25519
-    EASYRSA_DIGEST: sha512
-    EASYRSA_REQ_CN: openvpn.example.com
-    EASYRSA_REQ_COUNTRY: JP
-    EASYRSA_REQ_PROVINCE: Tokyo
-    EASYRSA_REQ_CITY: .
-    EASYRSA_REQ_ORG: example.com
-    EASYRSA_REQ_EMAIL: example@example.com
-    EASYRSA_REQ_OU: .
+    EASYRSA_ALGO: "ed"
+    EASYRSA_CURVE: "ed25519"
+    EASYRSA_DIGEST: "sha512"
+    EASYRSA_REQ_CN: "openvpn.example.com"
+    EASYRSA_REQ_COUNTRY: "JP"
+    EASYRSA_REQ_PROVINCE: "Tokyo"
+    EASYRSA_REQ_CITY: "."
+    EASYRSA_REQ_ORG: "example.com"
+    EASYRSA_REQ_EMAIL: "example@example.com"
+    EASYRSA_REQ_OU: "."
     EASYRSA_CA_EXPIRE: 3652
     EASYRSA_CERT_EXPIRE: 1826
-

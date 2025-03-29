@@ -1,0 +1,7 @@
+# Mise
+Types: deb
+URIs: https://mise.jdx.dev/deb
+Suites: stable
+Components: main
+Architectures: arm64
+Signed-By: /usr/share/keyrings/mise.pub

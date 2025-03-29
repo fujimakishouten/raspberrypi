@@ -1,5 +1,4 @@
 ---
-- name: reload sysctl
+- name: "reload sysctl"
   ansible.builtin.shell: |
-    sysctl --system
-
+    sysctl --system daemon-reload

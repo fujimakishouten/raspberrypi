@@ -1,0 +1,17 @@
+---
+- name: "Install packages"
+  ansible.builtin.apt:
+    name:
+      - "matrix-synapse"
+    state: "latest"
+    update_cache: true
+
+- name: "Copy ngircd.conf"
+  ansible.builtin.copy:
+    src: "{{item}}"
+    dest: "/etc/ngircd"
+    backup: true
+  with_items:
+    - "homeserver.yaml"
+    - "log.yaml"
+  notify: "restart matrix-synapse"

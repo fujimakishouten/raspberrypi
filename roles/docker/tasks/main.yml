@@ -1,15 +1,15 @@
 ---
-- name: Install docker
+- name: "Install docker"
   ansible.builtin.apt:
-    name:
-      - "docker.io"
-      - kubernetes-client
-    state: latest
-    update_cache: yes
+      name:
+          - "docker.io"
+          - "kubernetes-client"
+      state: "latest"
+      update_cache: true
 
-- name: Copy daemon.json
+- name: "Copy daemon.json"
   ansible.builtin.copy:
-      src: daemon.json
-      dest: /etc/docker/daemon.json
-      backup: yes
-  notify: restart docker
+      src: "daemon.json"
+      dest: "/etc/docker/daemon.json"
+      backup: true
+  notify: "restart docker"

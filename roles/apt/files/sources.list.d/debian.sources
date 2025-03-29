@@ -30,7 +30,7 @@ Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
 Types: deb deb-src
 URIs: http://deb.debian.org/debian/
 Suites: testing-updates
-Components: main contribv non-free non-free-firmware
+Components: main contrib non-free non-free-firmware
 Architectures: arm64
 Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
 

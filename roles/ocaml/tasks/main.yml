@@ -1,9 +1,8 @@
 ---
-- name: Install ocaml
+- name: "Install ocaml"
   ansible.builtin.apt:
     name:
-      - ocaml
-      - utop
-    state: latest
+      - "ocaml"
+      - "utop"
+    state: "latest"
     update_cache: true
-

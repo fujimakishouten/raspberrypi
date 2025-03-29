@@ -1,5 +1,5 @@
-- hosts: all
-  become: yes
-  become_user: root
+- hosts: "all"
+  become: true
+  become_user: "root"
   roles:
-    - ../roles/ikev2
+    - "../roles/ikev2"

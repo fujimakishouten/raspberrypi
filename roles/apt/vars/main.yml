@@ -1,10 +1,20 @@
 ---
 keys:
-  - url: "https://keyring.debian.org/pks/lookup?op=get&search=0x5C808C2B65558117"
-    dest: "/usr/share/keyrings/deb-multimedia-keyring.gpg"
+  - url: "https://pkg.cloudflareclient.com/pubkey.gpg"
+    dest: "/usr/share/keyrings/cloudflare-warp-archive-keyring.asc"
+  - url: "https://mise.jdx.dev/gpg-key.pub"
+    dest: "/usr/share/keyrings/mise-archive-keyring.asc"
+  - url: "https://apt.fury.io/nushell/gpg.key"
+    dest: "/usr/share/keyrings/nushell.asc"
+  - url: "https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg"
+    dest: "/usr/share/keyrings/tailscale-archive-keyring.asc"
 sources:
-  - "deb-multimedia.sources"
+  - "cloudflare-client.sources"
   - "debian.sources"
+  - "raspi.sources"
+  - "mise.sources"
+  - "nushell.sources"
+  - "tailscale.sources"
 packages:
   - "ansible"
   - "apache2-utils"

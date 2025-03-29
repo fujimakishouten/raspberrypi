@@ -1,0 +1,17 @@
+---
+- name: "Install packages"
+  ansible.builtin.apt:
+    name:
+      - "ngircd"
+    state: "latest"
+    update_cache: true
+
+- name: "Copy ngircd.conf"
+  ansible.builtin.copy:
+    src: "{{item}}"
+    dest: "/etc/ngircd"
+    backup: true
+  with_items:
+    - "ngircd.conf"
+    - "ngircd.motd"
+  notify: "restart ngircd"
