@@ -3,5 +3,5 @@ Types: deb
 URIs: https://pkgs.tailscale.com/stable/debian
 Suites: bookworm
 Components: main
-Architectures: arm64
+Architectures: amd64
 Signed-By: /usr/share/keyrings/tailscale-archive-keyring.gpg

@@ -4,4 +4,4 @@ URIs: https://apt.fury.io/nushell/
 Suites: /
 Components:
 Architectures: amd64
-Signed-By: /usr/share/keyrings/nushell.gpg
+Signed-By: /usr/share/keyrings/nushell.asc

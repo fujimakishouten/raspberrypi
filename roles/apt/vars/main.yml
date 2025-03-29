@@ -9,7 +9,7 @@ keys:
   - url: "https://apt.fury.io/nushell/gpg.key"
     dest: "/usr/share/keyrings/nushell.asc"
   - url: "https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg"
-    dest: "/usr/share/keyrings/tailscale-archive-keyring.asc"
+    dest: "/usr/share/keyrings/tailscale-archive-keyring.gpg"
 sources:
   - "cloudflare-client.sources"
   - "debian.sources"
