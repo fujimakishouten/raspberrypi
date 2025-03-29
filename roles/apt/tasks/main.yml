@@ -1,22 +1,38 @@
 ---
-- name: Set default release version
-  ansible.builtin.copy:
-    src: 99target
-    dest: /etc/apt/apt.conf.d/99target
-    backup: yes
-
-- name: Copy sources.list
-  ansible.builtin.copy:
-    src: sources.list
-    dest: /etc/apt/sources.list
-    backup: yes
-
-- name: Update cache
+- name: "Add required packages"
   ansible.builtin.apt:
-    update_cache: yes
+    name:
+      - "apt-transport-https"
+      - "curl"
+      - "dirmngr"
+    state: "latest"
 
-- name: Install packages
+- name: "Add apt keys"
+  ansible.builtin.get_url:
+    url: "{{item.url}}"
+    dest: "{{item.dest}}"
+  with_items:
+    - "{{keys}}"
+
+- name: "Set default release version"
+  ansible.builtin.copy:
+    src: "99target"
+    dest: "/etc/apt/apt.conf.d/99target"
+    backup: true
+
+- name: "Copy sources list files"
+  ansible.builtin.copy:
+    src: "sources.list.d/{{item}}"
+    dest: "/etc/apt/sources.list.d"
+    backup: true
+  with_items:
+    - "{{sources}}"
+
+- name: "Update cache"
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: "Install packages"
   ansible.builtin.apt:
     name: "{{packages}}"
-    state: latest
-    update_cache: yes
+    state: "latest"

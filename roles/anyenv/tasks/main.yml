@@ -1,5 +1,5 @@
-- name: Install anyenv
+- name: "Install anyenv"
   ansible.builtin.git:
-    repo: https://github.com/anyenv/anyenv.git
-    dest: /opt/anyenv
+    repo: "https://github.com/anyenv/anyenv.git"
+    dest: "/opt/anyenv"
     update: true
