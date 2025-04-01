@@ -2,6 +2,8 @@
 keys:
   - url: "https://pkg.cloudflareclient.com/pubkey.gpg"
     dest: "/usr/share/keyrings/cloudflare-warp-archive-keyring.asc"
+  - url: "https://repo.charm.sh/apt/gpg.key"
+    dest: "/usr/share/keyrings/glow.asc"
   - url: "https://mise.jdx.dev/gpg-key.pub"
     dest: "/usr/share/keyrings/mise-archive-keyring.asc"
   - url: "https://apt.fury.io/nushell/gpg.key"
@@ -11,6 +13,7 @@ keys:
 sources:
   - "cloudflare-client.sources"
   - "debian.sources"
+  - "glow.sources"
   - "raspi.sources"
   - "mise.sources"
   - "nushell.sources"
