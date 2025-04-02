@@ -41,6 +41,8 @@ packages:
   - "fish"
   - "fzf"
   - "git"
+  - "git-delta"
+  - "git-lfs"
   - "git-secret"
   - "glances"
   - "global"
