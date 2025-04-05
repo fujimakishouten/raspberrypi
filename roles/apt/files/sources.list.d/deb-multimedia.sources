@@ -1,0 +1,8 @@
+# Debian multimedia
+Types: deb deb-src
+URIs: http://www.deb-multimedia.org/
+Suites: testing
+Components: main non-free
+Architectures: arm64
+Signed-By: /usr/share/keyrings/deb-multimedia-keyring.asc
+
