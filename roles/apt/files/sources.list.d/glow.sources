@@ -3,5 +3,5 @@ Types: deb
 URIs: https://repo.charm.sh/apt/
 Suites: *
 Components: *
-Architectures: amd64
+Architectures: arm64
 Signed-By: /usr/share/keyrings/glow.asc

@@ -3,5 +3,5 @@ Types: deb
 URIs: https://apt.fury.io/nushell/
 Suites: /
 Components:
-Architectures: amd64
+Architectures: arm64
 Signed-By: /usr/share/keyrings/nushell.asc
