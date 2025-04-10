@@ -2,9 +2,11 @@
 packages:
   - "autoconf"
   - "bison"
+  - "libcpuinfo-dev"
   - "libcurl4-gnutls-dev"
   - "libgd-dev"
   - "libonig-dev"
+  - "libopenh264-dev"
   - "libpq-dev"
   - "libreadline-dev"
   - "libsqlite3-dev"
